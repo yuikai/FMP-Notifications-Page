@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  
+  <title>Frontend Mentor | Notifications page</title>
+  
+  <!-- development version, includes helpful console warnings -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <link rel="stylesheet" type="text/css" href="./styles.css"/>
+</head>
+<body>
+  <div id="app">
+    <div v-for="( act, index ) in activities"
+      :class="act.unread ? 'notification-unread' : 'notification-read'"
+      :key="index"
+      @click="toggleRead(index)">
+      
+      <img class="srcImg" :src="act.srcImg" alt="Source Image"/>
+      
+      <div class="content">
+        <p>
+          <b class="source">{{ act.source }}</b>
+          {{ description( index )[0] }}
+          <b class="argument">{{ description( index )[1] }}</b>
+
+          <span v-if="act.unread"
+            class="status-dot"></span>
+        </p>
+      </div>
+      <p class="time">{{ passedTime( index ) }} ago</p>
+        
+      <p class="msg"
+        v-if="[3].includes( act.type )">
+        {{ description( index )[2] }}
+      </p>
+
+      <img class="postImg"
+        v-if="[6, 7].includes( act.type )"
+        :src="description( index )[3]"
+        alt="Posted Picture"/>
+    </div>
+
+    <div id="header">
+      <h1>Notifications</h1>
+      <h2 v-if="unreadCount > 0">{{ unreadCount }}</h2>
+      <p @click="markAllAsRead">Mark all as read</p>
+    </div>
+  </div>
+  
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a href="#">uKai</a>.
+  </div>
+
+  <script src="./main.js"></script>
+</body>
+</html>
